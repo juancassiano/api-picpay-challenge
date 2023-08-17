@@ -2,7 +2,7 @@ package com.picpaysimplificado.controller;
 
 import com.picpaysimplificado.domain.user.User;
 import com.picpaysimplificado.dtos.UserDTO;
-import com.picpaysimplificado.services.UserService;
+import com.picpaysimplificado.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

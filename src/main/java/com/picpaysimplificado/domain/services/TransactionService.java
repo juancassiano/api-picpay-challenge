@@ -1,9 +1,9 @@
-package com.picpaysimplificado.services;
+package com.picpaysimplificado.domain.services;
 
 import com.picpaysimplificado.domain.transaction.Transaction;
 import com.picpaysimplificado.domain.user.User;
 import com.picpaysimplificado.dtos.TransactionDTO;
-import com.picpaysimplificado.repositories.TransactionRepository;
+import com.picpaysimplificado.domain.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

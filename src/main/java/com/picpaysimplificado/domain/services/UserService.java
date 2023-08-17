@@ -1,11 +1,13 @@
-package com.picpaysimplificado.services;
+package com.picpaysimplificado.domain.services;
 
+import com.picpaysimplificado.domain.exceptions.UserNotFoundException;
+import com.picpaysimplificado.domain.exceptions.UserWithoutBalanceException;
+import com.picpaysimplificado.domain.exceptions.UserWithoutPermissionException;
 import com.picpaysimplificado.domain.user.User;
 import com.picpaysimplificado.domain.user.UserType;
 import com.picpaysimplificado.dtos.UserDTO;
-import com.picpaysimplificado.repositories.UserRepository;
+import com.picpaysimplificado.domain.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -16,23 +18,24 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void validateTransaction(User sender, BigDecimal amount) throws Exception {
+    public void validateTransaction(User sender, BigDecimal amount){
         if(sender.getUserType() == UserType.MERCHANT){
-            throw new Exception("Usuário do tipo Logista não está autorizado a realizar transação");
+            throw new UserWithoutPermissionException("Usuário do tipo Logista não está autorizado a realizar transação");
         }
         if(sender.getBalance().compareTo(amount) < 0){
-            throw new Exception("Usuário sem saldo insuficiente");
+            throw new UserWithoutBalanceException("Usuário sem saldo insuficiente");
         }
     }
 
-    public User findUserById(Long id) throws Exception {
+    public User findUserById(Long id) {
         return this.userRepository.findUserById(id).orElseThrow(
-                () -> new Exception("Usuário não encontrado")
+                () -> new UserNotFoundException("Usuário não encontrado")
         );
     }
 
     public void saveUser(User user){
-        this.userRepository.save(user);
+         this.userRepository.save(user);
+
     }
 
     public User createUser(UserDTO user) {
