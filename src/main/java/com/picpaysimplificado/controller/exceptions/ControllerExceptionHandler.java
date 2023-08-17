@@ -3,7 +3,6 @@ package com.picpaysimplificado.controller.exceptions;
 import com.picpaysimplificado.domain.exceptions.UserNotFoundException;
 import com.picpaysimplificado.domain.exceptions.UserWithoutBalanceException;
 import com.picpaysimplificado.domain.exceptions.UserWithoutPermissionException;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +19,8 @@ import java.time.LocalDateTime;
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
 
+    public static final String MSG_GENERIC_ERROR = "Ocorreu um erro interno inesperado no sistema. Tente novamente e se "
+            + "o problema persistir, entre em contato com o administrador do sistema.";
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
@@ -51,6 +52,18 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleUncaughtException(Exception ex, WebRequest request){
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        ProblemType problemType = ProblemType.ERRO_DE_SISTEMA;
+        String detail = MSG_GENERIC_ERROR;
+        ex.printStackTrace();
+
+        Problem problem = createProblemBuilder(status, problemType, detail).build();
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
