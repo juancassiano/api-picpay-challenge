@@ -1,5 +1,6 @@
 package com.picpaysimplificado.controller.exceptions;
 
+import com.picpaysimplificado.domain.exceptions.UserNotFoundException;
 import com.picpaysimplificado.domain.exceptions.UserWithoutBalanceException;
 import com.picpaysimplificado.domain.exceptions.UserWithoutPermissionException;
 import jakarta.persistence.EntityNotFoundException;
@@ -52,15 +53,15 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex, WebRequest request){
-
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Object> handleEntityAlreadyExists(UserNotFoundException ex, WebRequest request){
         HttpStatus status = HttpStatus.NOT_FOUND;
         ProblemType problemType = ProblemType.ENTITY_NOT_FOUND;
         String detail = ex.getMessage();
         Problem problem = createProblemBuilder(status,problemType,detail).build();
 
-        return handleExceptionInternal(ex,problem, new HttpHeaders(), status, request);
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+
     }
 
     @ExceptionHandler(UserWithoutBalanceException.class)

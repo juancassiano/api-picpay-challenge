@@ -8,4 +8,8 @@ public class UserNotFoundException extends RuntimeException {
         super(mensagem);
     }
 
+    public UserNotFoundException(Long id) {
+        this(String.format("Não existe um usuário para o id: %d", id));
+    }
+
 }
