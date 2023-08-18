@@ -9,10 +9,11 @@ public enum ProblemType {
     PARAMETRO_INVALIDO("/parametro-invalido", "Parâmetro inválido"),
     MENSAGEM_INCOMPREENSIVEL("/mensagem-incompreensivel", "Mensagem incompreensível"),
     RECURSO_NAO_ENCONTRADO("/recurso-nao-encontrado", "Recurso não encontrado"),
-    ENTITY_IN_USE("/entity-in-use", "Entidade em uso"),
-    ENTITY_ALREADY_EXISTS("/entity-already-exist", "Entidade já cadastrada"),
-    ENTITY_NOT_FOUND("/entity-not-found", "Entidade não encontrada"),
-    USER_WITHOUT_BALANCE("/user-without-balance", "Usuário sem saldo disponível");
+    ENTIDADE_EM_USO("/entidade-em-uso", "Entidade em uso"),
+    ENTIDADE_JA_CADASTRADA("/entidade-ja-cadastrada", "Entidade já cadastrada"),
+    ENTIDADE_NAO_ENCONTRADA("/entidade-nao-encontrada", "Entidade não encontrada"),
+    USUARIO_SEM_SALDO("/usuario-sem-saldo", "Usuário sem saldo disponível"),
+    USUARIO_SEM_PERMISSAO("/usuario-sem-saldo", "Usuário sem permissão");
 
     private String title;
     private String uri;
